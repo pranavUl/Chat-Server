@@ -6,25 +6,25 @@ import java.io.ObjectOutputStream;
 
 public class Connect4Frame extends JFrame implements KeyListener, WindowListener, MouseListener {
     private String text = "";
-    private char player;
+    private char user;
     private int circleSize = 40; // Adjusted circle size
-    private GameData gameData = null;
+    private ChatData chatData = null;
     private long startTime = -1;
     private boolean sentResetRequest = false;
     private boolean sendingConfirmReset = false;
     ObjectOutputStream os;
     private char turn;
 
-    public Connect4Frame(GameData gameData, ObjectOutputStream os, char player) {
+    public Connect4Frame(ChatData gameData, ObjectOutputStream os, char user) {
         super("Connect 4 Game");
-        this.gameData = gameData;
+        this.chatData = gameData;
         this.os = os;
-        this.player = player;
+        this.user = user;
         addKeyListener(this);
         addMouseListener(this);
         addWindowListener(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(400, 450); // Adjusted frame size
+        setSize(600, 800); // Adjusted frame size
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -62,7 +62,7 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
 
     public void setTurn(char t) {
         turn = t;
-        if (t == player)
+        if (t == user)
             text = "Your turn";
         else {
             if (t == 'e') {
@@ -87,7 +87,7 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
         char key = event.getKeyChar();
         int r;
 
-        if (player != turn) {
+        if (user != turn) {
             return;
         }
         switch (key) {
@@ -116,11 +116,11 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
                 r = -1;
         }
         if (r != -1) {
-            int row = gameData.addToLowest(r, player);
+            int row = gameData.addToLowest(r, user);
             int col = r - 1;
             if (row != -1) {
                 try {
-                    os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + col + row + player));
+                    os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + col + row + user));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -144,7 +144,7 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.CLOSING, "" + player));
+            os.writeObject(new CommandFromClient(CommandFromClient.CLOSING, "" + user));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -197,8 +197,8 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
 
     public void initializeConfirm(String m, String title) {
         sendingConfirmReset = true;
-        if (player == turn) {
-            text = "Waiting for the other player to accept the request...";
+        if (user == turn) {
+            text = "Waiting for the other user to accept the request...";
         } else {
             text = "Right click to accept the reset request.";
         }
@@ -230,7 +230,7 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
             return;
         }
 
-        if (player != turn) // If it's not the player's turn, do nothing
+        if (user != turn) // If it's not the user's turn, do nothing
             return;
 
         if (gameData.isWinner('X') || gameData.isWinner('O') || gameData.isCat()) {
@@ -247,10 +247,10 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
 
         // Make a move in the corresponding column
         if (column >= 0 && column < 7) {
-            int row = gameData.addToLowest(column + 1, player);
+            int row = gameData.addToLowest(column + 1, user);
             if (row != -1) {
                 try {
-                    os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + column + row + player));
+                    os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + column + row + user));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -271,7 +271,7 @@ public class Connect4Frame extends JFrame implements KeyListener, WindowListener
     }
 
     private void resetGame() {
-        if (player == turn) {
+        if (user == turn) {
             if (gameData.isWinner('X') || gameData.isWinner('O') || gameData.isCat()) {
                 if (sendingConfirmReset) {
                     try {

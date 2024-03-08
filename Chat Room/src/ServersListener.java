@@ -8,8 +8,8 @@ public class ServersListener implements Runnable
     private ObjectInputStream is;
     private ObjectOutputStream os;
 
-    // Stores the which player this listener is for
-    private char player;
+    // Stores the which user this listener is for
+    private char user;
 
     // static data that is shared between both listeners
     private static char turn = 'X';
@@ -17,10 +17,10 @@ public class ServersListener implements Runnable
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
 
 
-    public ServersListener(ObjectInputStream is, ObjectOutputStream os, char player) {
+    public ServersListener(ObjectInputStream is, ObjectOutputStream os, char user) {
         this.is = is;
         this.os = os;
-        this.player = player;
+        this.user = user;
         outs.add(os);
     }
 
@@ -55,7 +55,7 @@ public class ServersListener implements Runnable
 
 
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
-                        turn==player && !gameData.isWinner('X')
+                        turn==user && !gameData.isWinner('X')
                         && !gameData.isWinner('O')
                         && !gameData.isCat())
                 {
@@ -70,9 +70,9 @@ public class ServersListener implements Runnable
                         continue;
 
                     // changes the server side game board
-                    gameData.getGrid()[r][c] = player;
+                    gameData.getGrid()[r][c] = user;
 
-                    // sends the move out to both players
+                    // sends the move out to both users
                     sendCommand(new CommandFromServer(CommandFromServer.MOVE,data));
 
                     // changes the turn and checks to see if the game is over
@@ -95,7 +95,7 @@ public class ServersListener implements Runnable
         else
             turn ='X';
 
-        // informs both client of the new player turn
+        // informs both client of the new users turn
         if (turn == 'X')
             sendCommand(new CommandFromServer(CommandFromServer.X_TURN, null));
         else
@@ -123,7 +123,7 @@ public class ServersListener implements Runnable
     }
     public void sendCommand(CommandFromServer cfs)
     {
-        // Sends command to both players
+        // Sends command to both users
         for (ObjectOutputStream o : outs) {
             try {
                 o.writeObject(cfs);

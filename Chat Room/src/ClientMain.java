@@ -6,7 +6,7 @@ public class ClientMain {
     public static void main(String[] args) {
         try {
             // create an object for the Connect4 game
-            GameData gameData = new GameData();
+            ChatData chatData = new ChatData();
 
 
             // create a connection to server
@@ -22,10 +22,10 @@ public class ClientMain {
 
             // Create the Frame based on which player the server says this client is
             if (cfs.getCommand() == CommandFromServer.CONNECTED_AS_X) {
-                frame = new Connect4Frame(gameData, os, 'X');
+                frame = new Connect4Frame(chatData, os, 'X');
                 frame.setText("Waiting for Black to connect"); // Set initial text
             } else {
-                frame = new Connect4Frame(gameData, os, 'O');
+                frame = new Connect4Frame(chatData, os, 'O');
             }
 
 
