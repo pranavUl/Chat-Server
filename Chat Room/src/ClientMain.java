@@ -28,7 +28,7 @@ public class ClientMain {
 
 
             // Determine if playing as X or O
-            CommandFromServer cfs = (CommandFromServer) is.readObject();
+            MessageToClient cfs = (MessageToClient) is.readObject();
             ChatFrame frame;
 
 
