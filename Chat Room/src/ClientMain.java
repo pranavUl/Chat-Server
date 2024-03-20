@@ -29,7 +29,7 @@ public class ClientMain {
 
             // Determine if playing as X or O
             CommandFromServer cfs = (CommandFromServer) is.readObject();
-            Connect4Frame frame;
+            ChatFrame frame;
 
 
             // Create the Frame based on which player the server says this client is
@@ -42,7 +42,7 @@ public class ClientMain {
 
 
             // Starts a thread that listens for commands from the server
-            ClientsListener cl = new ClientsListener(is, os, frame);
+            ClientListener cl = new ClientListener(is, os, frame);
             Thread t = new Thread(cl);
             t.start();
         } catch (Exception e) {

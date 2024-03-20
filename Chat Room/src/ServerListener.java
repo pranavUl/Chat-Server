@@ -1,27 +1,16 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ServersListener implements Runnable
+public class ServerListener implements Runnable
 {
-    private ObjectInputStream is;
-    private ObjectOutputStream os;
-
-    // Stores the which user this listener is for
-    private char user;
-
-    // static data that is shared between both listeners
-    private static char turn = 'X';
-    private static GameData gameData = new GameData();
-    private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
+    private ServerSocket serverSocket;
 
 
-    public ServersListener(ObjectInputStream is, ObjectOutputStream os, char user) {
-        this.is = is;
-        this.os = os;
-        this.user = user;
-        outs.add(os);
+    public ServerListener(ServerSocket s) {
+        this.serverSocket = s;
     }
 
     @Override

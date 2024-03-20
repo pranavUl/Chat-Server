@@ -1,15 +1,15 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class ClientsListener implements Runnable
+public class ClientListener implements Runnable
 {
     private ObjectInputStream is = null;
     private ObjectOutputStream os = null;
-    private Connect4Frame frame = null;
+    private ChatFrame frame = null;
 
-    public ClientsListener(ObjectInputStream is,
-                           ObjectOutputStream os,
-                           Connect4Frame frame) {
+    public ClientListener(ObjectInputStream is,
+                          ObjectOutputStream os,
+                          ChatFrame frame) {
         this.is = is;
         this.os = os;
         this.frame = frame;
