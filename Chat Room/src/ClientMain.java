@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -5,8 +6,19 @@ import java.net.Socket;
 public class ClientMain {
     public static void main(String[] args) {
         try {
-            // create an object for the Connect4 game
-            ChatData chatData = new ChatData();
+
+            String username;
+            boolean validName = false;
+            do {
+                username = JOptionPane.showInputDialog("Enter username: ");
+                if (username != null && !username.trim().isEmpty()) {
+                    validName = true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Pleae enter a valid username");
+                }
+            }
+            while (!validName);
 
 
             // create a connection to server
@@ -21,12 +33,12 @@ public class ClientMain {
 
 
             // Create the Frame based on which player the server says this client is
-            if (cfs.getCommand() == CommandFromServer.CONNECTED_AS_X) {
+            /*if (cfs.getCommand() == CommandFromServer.CONNECTED_AS_X) {
                 frame = new Connect4Frame(chatData, os, 'X');
                 frame.setText("Waiting for Black to connect"); // Set initial text
             } else {
                 frame = new Connect4Frame(chatData, os, 'O');
-            }
+            }*/
 
 
             // Starts a thread that listens for commands from the server
