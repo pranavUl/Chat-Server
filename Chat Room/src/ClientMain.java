@@ -31,12 +31,26 @@ public class ClientMain {
 
 
             // Determine if playing as X or O
-            MessageToClient cfs = (MessageToClient) is.readObject();
-            ChatFrame frame;
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
-            ClientListener cl = new ClientListener(is, os);
-            Thread t = new Thread(cl);
-            t.start();
+
+            ChatFrame chatFrame = new ChatFrame(username);
+            chatFrame.setObjectOutputStream(outputStream); // Set ObjectOutputStream
+
+
+            outputStream.writeObject(new MessageFromClient(username, "has joined"));
+
+
+            ClientListener clientListener = new ClientListener(inputStream, chatFrame);
+            Thread listenerThread = new Thread(clientListener);
+            listenerThread.start();
+
+
+            // Add the username to the user list on the chat frame
+            chatFrame.addUser(username);
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
