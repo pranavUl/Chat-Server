@@ -36,6 +36,21 @@ public class ServerListener implements Runnable {
             e.printStackTrace();
         }
     }
+    private class ClientHandler implements Runnable {
+        private ObjectInputStream inputStream;
+        private ObjectOutputStream outputStream;
+        private String username;
+
+        public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream) {
+            this.inputStream = inputStream;
+            this.outputStream = outputStream;
+        }
+
+        @Override
+        public void run(){
+            
+        }
+    }
 
 
 
