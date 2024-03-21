@@ -63,6 +63,20 @@ public class ServerListener implements Runnable {
                             break;
                         } else {
                             String newUsername = message.getSender().toLowerCase().trim();
+                            if (!usernames.contains(newUsername)) {
+                                if (!newUsername.isEmpty()) { // Ensure non-empty username
+                                    username = newUsername;
+                                    usernames.add(username);
+                                } else {
+                                    // Send a message to the client informing about invalid username
+                                    outputStream.writeObject(new MessageToClient("", "Invalid username", new ArrayList<>(usernames)));
+                                    continue; // Skip broadcasting
+                                }
+                            } else {
+                                // Send a message to the client informing about duplicate username
+                                outputStream.writeObject(new MessageToClient("", "Username already exists", new ArrayList<>(usernames)));
+                                continue; // Skip broadcasting
+                            }
                             broadcastMessage(new MessageToClient(username, message.getMessage(), new ArrayList<>(usernames)));
                         }
                     }
