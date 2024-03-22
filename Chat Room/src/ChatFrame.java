@@ -110,7 +110,24 @@ public class ChatFrame extends JFrame implements ActionListener {
     }
 
 
-    
+    public void setObjectOutputStream(ObjectOutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+
+    public void addUser(String user) {
+        userListModel.addElement(user);
+    }
+
+
+    public void removeUser(String user) {
+        userListModel.removeElement(user);
+    }
 
 
     public void updateUserList(List<String> users) {
