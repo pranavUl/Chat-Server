@@ -19,7 +19,7 @@ public class ClientMain {
                     validName = true;
                 }
                 else {
-                    System.out.println("Please enter a valid username: ")
+                    System.out.println("Please enter a valid username: ");
                 }
             }
             while (!validName);

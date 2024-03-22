@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 public class ChatFrame extends JFrame implements ActionListener {
 

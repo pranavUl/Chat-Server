@@ -20,6 +20,7 @@ public class ServerMain
             System.out.println("X has Connected.");*/
 
             // Creates a Thread to listen to the X client
+            System.out.println("Server is running...");// check to see if running
             ServerListener sl = new ServerListener(serverSocket);
             Thread t = new Thread(sl);
             t.start();

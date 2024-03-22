@@ -23,11 +23,11 @@ public class ClientListener implements Runnable
             {
                 MessageToClient message = (MessageToClient) inputStream.readObject();
                 if (message.getMessage().equals("exit")) {
-                    //chatFrame.appendMessage(message.getSender() + " disconnected");
-                    //chatFrame.removeUser(message.getSender());
+                    chatFrame.appendMessage(message.getSender() + " disconnected");
+                    chatFrame.removeUser(message.getSender());
                 } else {
-                    //chatFrame.appendMessage(message.getSender() + ": " + message.getMessage());
-                    //chatFrame.updateUserList(message.getUserList()); // Update user list in UI
+                    chatFrame.appendMessage(message.getSender() + ": " + message.getMessage());
+                    chatFrame.updateUserList(message.getUserList()); // Update user list in UI
                 }
             }
         }
