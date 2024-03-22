@@ -65,6 +65,61 @@ public class ChatFrame extends JFrame implements ActionListener {
 
         setVisible(true);
     }
+    public void appendMessage(String message) {
+        chatArea.append(message + "\n");
+    }
+
+
+    public String getMessage() {
+        return messageField.getText();
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == sendButton) {
+            String message = getMessage();
+            if (!message.isEmpty()) {
+                // Send the message to the server
+                sendMessageToServer(message);
+                messageField.setText(""); // Clear the message field
+            }
+        } else if (e.getSource() == exitButton) {
+            // Handle exit action
+            exitChat();
+        }
+    }
+
+
+    private void sendMessageToServer(String message) {
+        try {
+            outputStream.writeObject(new MessageFromClient(username, message));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    private void exitChat() {
+        try {
+            outputStream.writeObject(new MessageFromClient(username, "exit"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        dispose(); // Close the window
+    }
+
+
+    
+
+
+    public void updateUserList(List<String> users) {
+        userListModel.clear();
+        for (String user : users) {
+            userListModel.addElement(user);
+        }
+    }
+
 
 
 }
