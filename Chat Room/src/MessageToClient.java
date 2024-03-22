@@ -17,23 +17,12 @@ public class MessageToClient implements Serializable {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public List<String> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<String> userList) {
-        this.userList = userList;
-    }
 }

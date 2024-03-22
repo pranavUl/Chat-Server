@@ -33,6 +33,7 @@ public class ServerListener implements Runnable {
                 outputStreams.add(outputStream);
 
                 Thread cleintThread = new Thread(new ClientHandler(inputStream, outputStream)); //WLL ADD LATER
+                cleintThread.start();
             }
         }
         catch(Exception e)
