@@ -20,7 +20,7 @@ public class ChatFrame extends JFrame implements ActionListener {
         super("Chat - " + username);
         this.username = username;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(600, 400);
+        setSize(1200, 800);
         setLayout(new BorderLayout());
 
 
