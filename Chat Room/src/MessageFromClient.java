@@ -1,9 +1,13 @@
+
 import java.io.Serializable;
+import java.util.List;
 
 public class MessageFromClient implements Serializable {
+    private String sender;
+    private String message;
 
-    public String sender;
-    public String message;
+
+
 
     public MessageFromClient(String sender, String message) {
         this.sender = sender;
@@ -11,12 +15,19 @@ public class MessageFromClient implements Serializable {
     }
 
 
+
+
     public String getSender() {
         return sender;
     }
+
+
 
 
     public String getMessage() {
         return message;
     }
 }
+
+
+

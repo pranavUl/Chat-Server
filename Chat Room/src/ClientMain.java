@@ -1,36 +1,31 @@
-import javax.swing.*;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+
 public class ClientMain {
     private static ObjectOutputStream outputStream;
+
+
     public static void main(String[] args) {
         try {
-
             String username;
             boolean validName = false;
             Scanner scanner = new Scanner(System.in);
             do {
-                System.out.print("Enter your Username: ");
+                System.out.print("Enter your username: ");
                 username = scanner.nextLine();
-                if (username != null && !username.trim().isEmpty()) {
+                if (!username.trim().isEmpty()) {
+                    // Validate username
                     validName = true;
+                } else {
+                    System.out.println("Please enter a valid username.");
                 }
-                else {
-                    System.out.println("Please enter a valid username: ");
-                }
-            }
-            while (!validName);
+            } while (!validName);
 
 
-            // create a connection to server
             Socket socket = new Socket("127.0.0.1", 8011);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-
-
-            // Determine if playing as X or O
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
 
@@ -50,13 +45,14 @@ public class ClientMain {
             chatFrame.addUser(username);
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
     public static ObjectOutputStream getOutputStream() {
         return outputStream;
     }
-
 }
+
